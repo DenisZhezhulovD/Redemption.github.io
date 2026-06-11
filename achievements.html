@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Red Dead Redemption 2 | Путь разработки & Достижения</title>
+    <title>Red Dead Redemption 2 | Шлях розробки та Досягнення</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -22,7 +22,6 @@
             min-height: 100vh;
         }
 
-        /* НОВЫЙ ФОН - СИЛУЭТ КОВБОЯ / ВЕСТЕРН */
         body::before {
             content: "";
             position: fixed;
@@ -38,7 +37,6 @@
             filter: brightness(0.28) contrast(1.15) sepia(0.25) saturate(0.9);
         }
 
-        /* ЛЁГКАЯ ТЕКСТУРА ДЛЯ АТМОСФЕРЫ (можно убрать, если не нравится) */
         body::after {
             content: "";
             position: fixed;
@@ -70,6 +68,29 @@
             padding: 2rem 2rem 4rem;
             position: relative;
             z-index: 1;
+        }
+
+        .back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .back-home img {
+            width: 80px;
+            height: auto;
+            border-radius: 12px;
+            border: 2px solid #bc3f2e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: all 0.2s;
+            background: #1a0a0a;
+        }
+        .back-home img:hover {
+            transform: scale(1.05);
+            border-color: #e6552e;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
         }
 
         .achievement-hero {
@@ -302,9 +323,39 @@
             backdrop-filter: blur(2px);
         }
 
+        .bottom-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0 1rem;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid #bc3f2e;
+            border-radius: 50px;
+            padding: 0.7rem 2rem;
+            text-decoration: none;
+            color: #fadfbf;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-btn:hover {
+            background: #bc3f2e;
+            color: #0a0505;
+            border-color: #e6552e;
+            transform: translateY(-2px);
+        }
+
         .footer-note {
             text-align: center;
-            margin-top: 4rem;
+            margin-top: 2rem;
             padding-top: 1.5rem;
             border-top: 1px solid #3f241c;
             font-size: 0.8rem;
@@ -324,125 +375,142 @@
             .fact-block {
                 padding: 1rem;
             }
+            .back-home img {
+                width: 55px;
+            }
+            .back-home {
+                top: 10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
 <body>
+
+<a href="index.html" class="back-home">
+    <img src="back.png" alt="Розшукується Артур Морган - Повернутися в головне меню">
+</a>
+
 <div class="rdr-container">
     <div class="achievement-hero">
-        <h1>ЗА КУЛИСАМИ <span style="color:#c4452e;">REDEMPTION</span></h1>
-        <div class="hero-sub">Путь длиною в восемь лет — масштаб, страсть и одержимость деталями</div>
+        <h1>ЗА ЛАШТУНКАМИ <span style="color:#c4452e;">REDEMPTION</span></h1>
+        <div class="hero-sub">Шлях завдовжки у вісім років — масштаб, пристрасть та одержимість деталями</div>
         <div class="brand-sep"></div>
     </div>
 
     <div class="stats-grid">
-        <div class="stat-card"><div class="stat-number">~8 лет</div><div class="stat-label">Полный цикл разработки</div></div>
-        <div class="stat-card"><div class="stat-number">2 000+</div><div class="stat-label">разработчиков</div></div>
-        <div class="stat-card"><div class="stat-number">1 200</div><div class="stat-label">актеров озвучки</div></div>
-        <div class="stat-card"><div class="stat-number">500 000+</div><div class="stat-label">диалоговых строк</div></div>
-        <div class="stat-card"><div class="stat-number">~2 200</div><div class="stat-label">дней анимации</div></div>
+        <div class="stat-card"><div class="stat-number">~8 років</div><div class="stat-label">Повний цикл розробки</div></div>
+        <div class="stat-card"><div class="stat-number">2 000+</div><div class="stat-label">розробників</div></div>
+        <div class="stat-card"><div class="stat-number">1 200</div><div class="stat-label">акторів озвучення</div></div>
+        <div class="stat-card"><div class="stat-number">500 000+</div><div class="stat-label">діалогових рядків</div></div>
+        <div class="stat-card"><div class="stat-number">~2 200</div><div class="stat-label">днів анімації</div></div>
     </div>
 
     <div class="revolver-divider"><div class="divider-line"></div><div class="divider-icon">⤛ 🔫 ⤜</div><div class="divider-line"></div></div>
 
     <div class="dev-facts">
         <div class="fact-block">
-            <h2>🎬 АНИМАЦИЯ & ДВИЖЕНИЕ — ТИТАНИЧЕСКИЙ ТРУД</h2>
+            <h2>АНІМАЦІЯ ТА РУХ — ТИТАНІЧНА ПРАЦЯ</h2>
             <div class="fact-detail">
                 <div class="fact-text">
-                    <p>Более <strong>2 200 дней</strong> непрерывной работы аниматоров. Команда motion capture фиксировала движения актеров на специальной сцене площадью более 1000 кв. метров. Каждый переход Артура, каждое движение поводьев лошади — оцифровано и отточено вручную. Rockstar создала более <strong>300 000 уникальных анимаций</strong> — только для персонажей и животных, включая 300+ видов зверей с реалистичным поведением.</p>
-                    <p>Система «инерции тела» и «естественных реакций» — более 50 тысяч часов в монтаже и чистке треков движения. Анимация лошадей потребовала отдельной команды из 30 специалистов, которые работали с реальными лошадьми в течение 2 лет.</p>
+                    <p>Понад <strong>2 200 днів</strong> безперервної роботи аніматорів. Команда motion capture фіксувала рухи акторів на спеціальній сцені площею понад 1000 кв. метрів. Кожен перехід Артура, кожен рух віжок коня — оцифровано та відточено вручну. Rockstar створила понад <strong>300 000 унікальних анімацій</strong> — лише для персонажів і тварин, включаючи 300+ видів звірів із реалістичною поведінкою.</p>
+                    <p>Система «інерції тіла» та «природних реакцій» — понад 50 тисяч годин монтажу та очищення треків руху. Анімація коней вимагала окремої команди з 30 фахівців, які працювали з реальними кіньми протягом 2 років.</p>
                 </div>
-                <div class="fact-highlight"><div class="highlight-number">2200+ дней</div><div class="highlight-caption">чистого времени анимации</div><div style="margin-top: 12px; font-size: 1.8rem;">🐎</div></div>
+                <div class="fact-highlight"><div class="highlight-number">2200+ днів</div><div class="highlight-caption">чистого часу анімації</div></div>
             </div>
         </div>
 
         <div class="fact-block">
-            <h2>🎙️ ЗАПИСЬ ДИАЛОГОВ & ОЗВУЧИВАНИЕ</h2>
+            <h2>ЗАПИС ДІАЛОГІВ ТА ОЗВУЧЕННЯ</h2>
             <div class="fact-detail">
                 <div class="fact-text">
-                    <p>Команда звукорежиссеров и актеров провела более <strong>5 лет</strong> в студиях звукозаписи. Всего записано свыше <strong>500 000 реплик</strong> (с учетом вариантов выбора и случайных событий). Главные герои — Роджер Кларк (Артур Морган) и Бенджамин Байрон Дэвис (Датч) — провели в студии более 2100 часов каждый.<br> Диалоги реагируют на окружение, усталость, погоду и ситуацию — система "диалогового дерева" RAGE Engine включает 500+ часов уникальных разговоров.</p>
-                    <p>Rockstar привлекла 1200 актеров, включая профессиональных каскадеров для фоновых персонажей. Локализация на 11 языков — общий объём озвучки превышает 1,2 миллиона отдельных семплов.</p>
+                    <p>Команда звукорежисерів та акторів провела понад <strong>5 років</strong> у студіях звукозапису. Загалом записано понад <strong>500 000 реплік</strong> (з урахуванням варіантів вибору та випадкових подій). Головні герої — Роджер Кларк (Артур Морган) та Бенджамін Байрон Девіс (Датч) — провели в студії понад 2100 годин кожен.<br> Діалоги реагують на оточення, втому, погоду та ситуацію — система «діалогового дерева» RAGE Engine включає 500+ годин унікальних розмов.</p>
+                    <p>Rockstar залучила 1200 акторів, включаючи професійних каскадерів для фонових персонажів. Локалізація 11 мовами — загальний обсяг озвучення перевищує 1,2 мільйона окремих семплів.</p>
                 </div>
-                <div class="fact-highlight"><div class="highlight-number">~500K строк</div><div class="highlight-caption">диалогов с вариантами</div><div style="margin-top: 12px;">🎧</div></div>
+                <div class="fact-highlight"><div class="highlight-number">~500K рядків</div><div class="highlight-caption">діалогів з варіантами</div></div>
             </div>
         </div>
 
         <div class="fact-block">
-            <h2>🖥️ РАЗРАБОТЧИКИ И МАСШТАБ</h2>
+            <h2>РОЗРОБНИКИ ТА МАСШТАБ</h2>
             <div class="fact-detail">
                 <div class="fact-text">
-                    <p>Основной костяк — более <strong>2000 разработчиков</strong> по всему миру: студии Rockstar в Сан-Диего, Нью-Йорке, Эдинбурге и Индии. Пиковая численность команды превышала 1600 человек одновременно. Итоговый код игры содержит около <strong>65 миллионов строк кода</strong>.</p>
-                    <p>Более 200 кинематографистов создали свыше 8 часов CGI-роликов. Для нужд игры написано 192 музыкальных композиции, а оригинальный саундтрек записывался с участием 110 музыкантов и хора.</p>
+                    <p>Основний кістяк — понад <strong>2000 розробників</strong> по всьому світу: студії Rockstar у Сан-Дієго, Нью-Йорку, Единбурзі та Індії. Пікова чисельність команди перевищувала 1600 осіб одночасно. Підсумковий код гри містить близько <strong>65 мільйонів рядків коду</strong>.</p>
+                    <p>Понад 200 кінематографістів створили понад 8 годин CGI-роликів. Для потреб гри написано 192 музичні композиції, а оригінальний саундтрек записувався за участю 110 музикантів та хору.</p>
                 </div>
-                <div class="fact-highlight"><div class="highlight-number">2000+ девелоперов</div><div class="highlight-caption">из 8 студий Rockstar</div></div>
+                <div class="fact-highlight"><div class="highlight-number">2000+ девелоперів</div><div class="highlight-caption">з 8 студій Rockstar</div></div>
             </div>
         </div>
 
         <div class="fact-block">
-            <h2>📜 МИР, ИСТОРИЯ И СЦЕНАРИЙ</h2>
+            <h2>СВІТ, ІСТОРІЯ ТА СЦЕНАРІЙ</h2>
             <div class="fact-detail">
                 <div class="fact-text">
-                    <p>Сценарий RDR2 весит более <strong>2000 страниц</strong> — это сравнимо с томами "Войны и мира". Сюжетные линии переписаны 3 раза за время разработки. Команда сценаристов во главе с Дэном Хаузером и Майклом Ансвортом потратила 4 года на изучение исторических документов эпохи Дикого Запада.</p>
-                    <p>В игре 109 миссий, 60 дополнительных заданий и более 50 случайных встреч, каждая со своей драматургией. Игровой мир площадью ~75 км², который наполнен сотнями уникальных локаций, от заснеженных гор до болот Лаграса.</p>
+                    <p>Сценарій RDR2 важить понад <strong>2000 сторінок</strong> — це можна порівняти з томами «Війни і миру». Сюжетні лінії переписували 3 рази за час розробки. Команда сценаристів на чолі з Деном Хаузером та Майклом Ансвортом витратила 4 роки на вивчення історичних документів епохи Дикого Заходу.</p>
+                    <p>У грі 109 місій, 60 додаткових завдань та понад 50 випадкових зустрічей, кожна зі своєю драматургією. Ігровий світ площею ~75 км², який наповнений сотнями унікальних локацій, від засніжених гір до боліт Лаграсу.</p>
                 </div>
-                <div class="fact-highlight"><div class="highlight-number">2 000 стр.</div><div class="highlight-caption">сценарий + лор мира</div></div>
+                <div class="fact-highlight"><div class="highlight-number">2 000 стор.</div><div class="highlight-caption">сценарій + лор світу</div></div>
             </div>
         </div>
     </div>
 
     <div class="revolver-divider"><div class="divider-line"></div><div class="divider-icon">⧫ ✦ ⧫</div><div class="divider-line"></div></div>
-    <h2 style="font-family: 'Cormorant SC'; font-size: 2rem; text-align:center; margin: 0 0 1rem;">⏳ ЭТАПЫ СОЗДАНИЯ</h2>
+    <h2 style="font-family: 'Cormorant SC'; font-size: 2rem; text-align:center; margin: 0 0 1rem;">ЕТАПИ СТВОРЕННЯ</h2>
     <div class="timeline-grid">
-        <div class="timeline-item"><div class="timeline-year">2011–2013</div><div class="timeline-desc">Пре-продакшн, концепт-арты, прототипы движка</div></div>
-        <div class="timeline-item"><div class="timeline-year">2014–2016</div><div class="timeline-desc">Motion-capture, создание мира, 1200 актёров</div></div>
-        <div class="timeline-item"><div class="timeline-year">2017</div><div class="timeline-desc">Полировка анимаций, физика лошадей</div></div>
-        <div class="timeline-item"><div class="timeline-year">2018</div><div class="timeline-desc">Релиз на консолях ➤ PC (2019)</div></div>
+        <div class="timeline-item"><div class="timeline-year">2011–2013</div><div class="timeline-desc">Пре-продакшн, концепт-арти, прототипи рушія</div></div>
+        <div class="timeline-item"><div class="timeline-year">2014–2016</div><div class="timeline-desc">Motion-capture, створення світу, 1200 акторів</div></div>
+        <div class="timeline-item"><div class="timeline-year">2017</div><div class="timeline-desc">Полірування анімацій, фізика коней</div></div>
+        <div class="timeline-item"><div class="timeline-year">2018</div><div class="timeline-desc">Реліз на консолях ➤ PC (2019)</div></div>
     </div>
 
     <div class="dev-crew">
-        <h2 style="font-size: 1.6rem; border-left: 5px solid #bc3f2e; padding-left: 1rem;">🏆 НЕВЕРОЯТНЫЕ ПОДРОБНОСТИ РАЗРАБОТКИ</h2>
+        <h2 style="font-size: 1.6rem; border-left: 5px solid #bc3f2e; padding-left: 1rem;">НЕЙМОВІРНІ ДЕТАЛІ РОЗРОБКИ</h2>
         <div class="crew-stats">
-            <div class="crew-stat"><span class="crew-number">70+ млн $</span><div class="crew-label">Бюджет только на анимацию</div></div>
-            <div class="crew-stat"><span class="crew-number">2200 суток</span><div class="crew-label">Работа аниматоров</div></div>
-            <div class="crew-stat"><span class="crew-number">2.3 млн</span><div class="crew-label">кадров захвата движения</div></div>
-            <div class="crew-stat"><span class="crew-number">+300 видов</span><div class="crew-label">уникальных животных</div></div>
+            <div class="crew-stat"><span class="crew-number">70+ млн $</span><div class="crew-label">Бюджет лише на анімацію</div></div>
+            <div class="crew-stat"><span class="crew-number">2200 діб</span><div class="crew-label">Робота аніматорів</div></div>
+            <div class="crew-stat"><span class="crew-number">2.3 млн</span><div class="crew-label">кадрів захоплення руху</div></div>
+            <div class="crew-stat"><span class="crew-number">+300 видів</span><div class="crew-label">унікальних тварин</div></div>
         </div>
         <div class="quote">
-            «Мы не просто создавали игру, мы строили живой мир, где каждый NPC проживает свою жизнь. Это потребовало 8 лет абсолютной преданности» — Сэм Хаузер, сооснователь Rockstar Games.
+            «Ми не просто створювали гру, ми будували живий світ, де кожен NPC проживає своє життя. Це потребувало 8 років абсолютної відданості» — Сем Хаузер, співзасновник Rockstar Games.
         </div>
         <div style="background:#191007cc; border-radius: 1rem; padding: 1rem; margin-top: 1.5rem;">
-            <p>🎙️ Роджер Кларк (Артур Морган) записывал реплики 5 лет, некоторые диалоги перезаписывали до 30 раз. Для лошадей записано 20 000 различных звуков.</p>
-            <p style="margin-top: 10px;">⏱️ Средняя рабочая неделя аниматоров в пик разработки: 60–80 часов.</p>
+            <p>Роджер Кларк (Артур Морган) записував репліки 5 років, деякі діалоги перезаписували до 30 разів. Для коней записано 20 000 різноманітних звуків.</p>
+            <p style="margin-top: 10px;">Середній робочий тиждень аніматорів у пік розробки: 60–80 годин.</p>
         </div>
     </div>
 
     <div class="awards-section">
-        <h2 style="font-family: 'Cormorant SC'; font-size: 1.8rem; text-align: center; margin-bottom: 1rem;">🌟 ПРИЗНАНИЕ & АЧИВМЕНТЫ</h2>
+        <h2 style="font-family: 'Cormorant SC'; font-size: 1.8rem; text-align: center; margin-bottom: 1rem;">ВИЗНАННЯ ТА ДОСЯГНЕННЯ</h2>
         <div class="awards-grid">
-            <span class="award-badge">🏆 The Game Awards 2018 — Лучшая история</span>
-            <span class="award-badge">🎬 BAFTA Games Awards — Лучший сценарий</span>
-            <span class="award-badge">🎮 Golden Joystick — Игра года</span>
-            <span class="award-badge">📀 4 рекорда Гиннесса</span>
-            <span class="award-badge">⭐ Metacritic 97 баллов</span>
-            <span class="award-badge">💿 Более 67 млн копий продано</span>
+            <span class="award-badge">The Game Awards 2018 — Найкраща історія</span>
+            <span class="award-badge">BAFTA Games Awards — Найкращий сценарій</span>
+            <span class="award-badge">Golden Joystick — Гра року</span>
+            <span class="award-badge">4 рекорди Гіннеса</span>
+            <span class="award-badge">Metacritic 97 балів</span>
+            <span class="award-badge">Понад 67 млн копій продано</span>
         </div>
     </div>
 
     <div class="fact-block" style="background: #0c0502cc;">
-        <h2>📀 ОБЩИЙ ТРУД В ЦИФРАХ</h2>
+        <h2>ЗАГАЛЬНА ПРАЦЯ В ЦИФРАХ</h2>
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;">
-            <div><span style="color: #d94a2b; font-weight:800;">≈ 300 000</span><br>анимационных файлов</div>
-            <div><span style="color: #d94a2b; font-weight:800;">≈ 5 лет</span><br>записи диалогов</div>
-            <div><span style="color: #d94a2b; font-weight:800;">≈ 1 200</span><br>человек в съемочной группе</div>
-            <div><span style="color: #d94a2b; font-weight:800;">65 млн</span><br>строк кода игры</div>
+            <div><span style="color: #d94a2b; font-weight:800;">≈ 300 000</span><br>анімаційних файлів</div>
+            <div><span style="color: #d94a2b; font-weight:800;">≈ 5 років</span><br>запису діалогів</div>
+            <div><span style="color: #d94a2b; font-weight:800;">≈ 1 200</span><br>людей у знімальній групі</div>
+            <div><span style="color: #d94a2b; font-weight:800;">65 млн</span><br>рядків коду гри</div>
         </div>
         <hr style="border-color: #5e2f22; margin: 1rem 0;">
-        <p style="color: #d3bc9b;">Rockstar Games потратила около 540 миллионов долларов на производство RDR2. Это одна из самых дорогих игр в истории.</p>
+        <p style="color: #d3bc9b;">Rockstar Games витратила близько 540 мільйонів доларів на виробництво RDR2. Це одна з найдорожчих ігор в історії.</p>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="photostudio.html" class="nav-btn">ФОТОСТУДІЯ</a>
+        <a href="story.html" class="nav-btn">СЮЖЕТ ТА ГЕРОЇ</a>
     </div>
 
     <div class="footer-note">
-        <p>★ Red Dead Redemption 2 — ода уходящему Дикому Западу, созданная титаническим трудом тысяч разработчиков, аниматоров, актеров и музыкантов. ★</p>
+        <p>★ Red Dead Redemption 2 — ода заходу Дикого Заходу, створена титанічною працею тисяч розробників, аніматорів, акторів та музикантів. ★</p>
     </div>
 </div>
 </body>
