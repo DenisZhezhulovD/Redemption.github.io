@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Red Dead Redemption 2 | Фотостудія — Світ Дикого Заходу</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,10 +15,15 @@
         body {
             background: #0a0505;
             background-image: radial-gradient(circle at 20% 30%, #1a0808, #020101);
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             color: #e8dfd3;
-            line-height: 1.5;
+            line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body.modal-open {
+            overflow: hidden;
         }
 
         ::-webkit-scrollbar {
@@ -64,8 +69,8 @@
         }
         .photo-header h1 {
             font-family: 'Cormorant SC', serif;
-            font-size: 4rem;
-            letter-spacing: 6px;
+            font-size: 4.5rem;
+            letter-spacing: 8px;
             font-weight: 700;
             background: linear-gradient(135deg, #e6c27a, #bc3f2e);
             -webkit-background-clip: text;
@@ -76,6 +81,7 @@
             color: #b69063;
             font-style: italic;
             margin-top: 8px;
+            font-size: 1.1rem;
         }
         .brand-divider {
             width: 100px;
@@ -89,14 +95,14 @@
             margin: 0 auto;
             padding: 1rem 2rem 4rem;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 2rem;
         }
 
         .photo-card {
             background: rgba(10, 5, 5, 0.7);
             backdrop-filter: blur(5px);
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
             border: 1px solid rgba(150, 60, 40, 0.5);
             transition: all 0.35s ease;
@@ -112,7 +118,7 @@
         .image-wrapper {
             position: relative;
             overflow: hidden;
-            height: 230px;
+            height: 250px;
         }
         .image-wrapper img {
             width: 100%;
@@ -134,13 +140,13 @@
         }
         .photo-overlay h3 {
             font-family: 'Cormorant SC', serif;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             letter-spacing: 1px;
             color: #f3cf94;
             text-shadow: 0 1px 3px black;
         }
         .photo-overlay p {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #ddb582;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -152,25 +158,25 @@
         .photo-location {
             display: inline-block;
             background: #2c130e;
-            padding: 0.2rem 0.7rem;
+            padding: 0.3rem 0.9rem;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #e0a26b;
             border-left: 2px solid #bc3f2e;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         .photo-desc {
-            font-size: 0.85rem;
+            font-size: 0.92rem;
             color: #cfbfa8;
-            line-height: 1.4;
+            line-height: 1.5;
         }
         .quote-mini {
-            margin-top: 8px;
-            font-size: 0.7rem;
+            margin-top: 10px;
+            font-size: 0.75rem;
             font-style: italic;
             color: #b68b60;
             border-top: 1px dashed #692e1f;
-            padding-top: 6px;
+            padding-top: 8px;
         }
 
         .dev-quote-block {
@@ -178,10 +184,14 @@
             margin: 2rem auto 3rem;
             background: rgba(0,0,0,0.6);
             backdrop-filter: blur(8px);
-            padding: 1.8rem;
+            padding: 2rem;
             border-radius: 40px;
             border-left: 6px solid #bc3f2e;
             text-align: center;
+        }
+        .dev-quote-block p {
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         /* НАВІГАЦІЙНІ КНОПКИ ВНИЗУ */
@@ -197,12 +207,12 @@
             backdrop-filter: blur(5px);
             border: 1px solid #bc3f2e;
             border-radius: 50px;
-            padding: 0.7rem 2rem;
+            padding: 0.8rem 2.2rem;
             text-decoration: none;
             color: #fadfbf;
             font-weight: 600;
             letter-spacing: 1px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             transition: all 0.2s;
             display: inline-flex;
             align-items: center;
@@ -220,18 +230,146 @@
             padding: 2rem;
             border-top: 1px solid #3f1d14;
             color: #7f6248;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
-        @media (max-width: 700px) {
+        /* МОДАЛЬНЕ ВІКНО ДЛЯ ПЕРЕГЛЯДУ ФОТО - ЗБІЛЬШЕНЕ ФОТО, ОПИС ЗНИЗУ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            cursor: pointer;
+        }
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            position: relative;
+            max-width: 92vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: modalZoom 0.35s ease-out;
+        }
+        @keyframes modalZoom {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .modal-content img {
+            max-width: 90vw;
+            max-height: 65vh;
+            object-fit: contain;
+            border-radius: 20px;
+            border: 3px solid #bc3f2e;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            margin-bottom: 1rem;
+        }
+        .modal-info {
+            background: linear-gradient(135deg, #1a0a08dd, #0a0302dd);
+            backdrop-filter: blur(12px);
+            padding: 1.2rem 2rem;
+            border-radius: 28px;
+            max-width: 650px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #bc3f2e;
+            animation: slideUp 0.4s ease-out 0.1s both;
+            margin-top: 0.5rem;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-info h3 {
+            font-family: 'Cormorant SC', serif;
+            font-size: 1.8rem;
+            color: #f3cf94;
+            margin-bottom: 0.4rem;
+            letter-spacing: 1px;
+        }
+        .modal-info .modal-sub {
+            font-size: 0.95rem;
+            color: #ddb582;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.6rem;
+        }
+        .modal-info .modal-location {
+            color: #e0a26b;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+            border-left: 2px solid #bc3f2e;
+            display: inline-block;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+        .modal-info .modal-desc {
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #cfbfa8;
+            margin-bottom: 0.8rem;
+        }
+        .modal-info .modal-quote {
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #b68b60;
+            margin-top: 8px;
+            border-top: 1px dashed #8f412e;
+            padding-top: 10px;
+        }
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: -10px;
+            font-size: 3rem;
+            color: #bc3f2e;
+            cursor: pointer;
+            transition: 0.2s;
+            background: none;
+            border: none;
+            font-weight: bold;
+            text-shadow: 0 0 8px black;
+            z-index: 10;
+        }
+        .close-modal:hover {
+            color: #e6552e;
+            transform: scale(1.1);
+        }
+        @media (max-width: 800px) {
             .gallery {
                 padding: 0.5rem 1rem 2rem;
+                gap: 1.2rem;
             }
             .photo-header h1 {
-                font-size: 2.6rem;
+                font-size: 2.8rem;
             }
             .image-wrapper {
-                height: 180px;
+                height: 200px;
             }
             .back-home img {
                 width: 55px;
@@ -239,6 +377,23 @@
             .back-home {
                 top: 10px;
                 left: 10px;
+            }
+            .modal-content img {
+                max-height: 55vh;
+            }
+            .modal-info h3 {
+                font-size: 1.4rem;
+            }
+            .modal-info .modal-desc {
+                font-size: 0.88rem;
+            }
+            .modal-info {
+                padding: 0.9rem 1.2rem;
+            }
+            .close-modal {
+                top: -45px;
+                right: 0;
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -259,7 +414,7 @@
 <div class="gallery">
     
     <!-- 1. Austin (Новий Остін) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="Austin.png" data-title="НОВИЙ ОСТІН" data-sub="пустеля & каньйони" data-location="Ріо-Браво, захід сонця" data-desc="Безкрайні червоні скелі, кактуси та золотаве світло. Система динамічного освітлення створює понад 300 унікальних відтінків заходу сонця." data-quote="«Хотіли передати атмосферу класичних вестернів Джона Форда»">
         <div class="image-wrapper">
             <img src="Austin.png" alt="Новий Остін">
             <div class="photo-overlay">
@@ -275,7 +430,7 @@
     </div>
 
     <!-- 2. Donner Falls -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="donner.png" data-title="DONNER FALLS" data-sub="водоспад & соснові ліси" data-location="Амбаріно, біля підніжжя гір" data-desc="Один із наймальовничіших водоспадів. Звуки води та луна серед скель створюють повне занурення. Команда Rockstar записувала реальні шуми водоспаду Йосеміті." data-quote="«Кожен водоспад у грі має унікальну акустику» — звукорежисер">
         <div class="image-wrapper">
             <img src="donner.png" alt="Водоспад Доннер">
             <div class="photo-overlay">
@@ -291,7 +446,7 @@
     </div>
 
     <!-- 3. Hannigan (Хенніган Стід) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="Hannigan.png" data-title="ХЕННІГАН СТІД" data-sub="червоні скелі & пилові бурі" data-location="Нью-Остін, пустеля" data-desc="Червоні пісковики та пилові бурі. Відображення від скель обробляється в реальному часі завдяки Rockstar Advanced Game Engine." data-quote="«У пустелі ми зменшили час відгуку рослинності — відчуття спеки»">
         <div class="image-wrapper">
             <img src="Hannigan.png" alt="Хенніган Стід">
             <div class="photo-overlay">
@@ -307,7 +462,7 @@
     </div>
 
     <!-- 4. Lagras (Болота) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="lagras.png" data-title="ЛАГРАС / БОЛОТА" data-sub="містика & туман" data-location="Лемойн, нічні вогні" data-desc="Густі тумани, світлячки та приховані небезпеки. Аніматори створили 12 видів болотних істот, включаючи рідкісних алігаторів-альбіносів." data-quote="«Болота вимагають 200+ унікальних звуків комах та птахів»">
         <div class="image-wrapper">
             <img src="lagras.png" alt="Болота Лаграс">
             <div class="photo-overlay">
@@ -323,7 +478,7 @@
     </div>
 
     <!-- 5. Lakota (Ріка Дакота) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="lakota.png" data-title="РІКА ДАКОТА" data-sub="каньйони & броди" data-location="Біля підніжжя гір, західніше Валентайна" data-desc="Ідеальне місце для риболовлі та спостереження за орлами. Гідродинаміка води — понад 1000 фізичних частинок на кожен струмок." data-quote="«Течія змінюється залежно від сезону та дощу»">
         <div class="image-wrapper">
             <img src="lakota.png" alt="Ріка Дакота">
             <div class="photo-overlay">
@@ -339,7 +494,7 @@
     </div>
 
     <!-- 6. Mounts (Гори Амбаріно) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="mounts.png" data-title="ГРАНИЧНІ ГОРИ" data-sub="завірюхи & вовки" data-location="Амбаріно, перевал Грізлі" data-desc="Засніжені вершини та замерзлі водоспади. Розробники оцифрували понад 50 видів слідів на снігу, які реагують на погоду." data-quote="«Сніг у RDR2 — це окремий рушій із 15 шарами фізики»">
         <div class="image-wrapper">
             <img src="mounts.png" alt="Гори Амбаріно">
             <div class="photo-overlay">
@@ -355,7 +510,7 @@
     </div>
 
     <!-- 7. Plains (Великі рівнини) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="plains.png" data-title="ВЕЛИКІ РІВНИНИ" data-sub="бізони & койоти" data-location="Захід Елізабет, стада бізонів" data-desc="Відкриті прерії з ефектом безкрайнього горизонту. Трава колишеться реалістично від вітру — 25 000 процедурних стебел." data-quote="«Стадо бізонів може налічувати до 40 особин з індивідуальним ШІ»">
         <div class="image-wrapper">
             <img src="plains.png" alt="Великі рівнини">
             <div class="photo-overlay">
@@ -371,7 +526,7 @@
     </div>
 
     <!-- 8. Rhoades (Роудс) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="Rhoades.png" data-title="РОУДС" data-sub="південний шарм & пилові вулиці" data-location="Лемойн, між Сен-Дені та болотами" data-desc="Невелике містечко з плантаціями та напруженою атмосферою. Натхненне реальними містами американського Півдня." data-quote="«Конфлікт родин Брейтуейтів і Греїв — відсилання до реальних кланів»">
         <div class="image-wrapper">
             <img src="Rhoades.png" alt="Роудс">
             <div class="photo-overlay">
@@ -387,7 +542,7 @@
     </div>
 
     <!-- 9. Sent Denis (Сен-Дені) -->
-    <div class="photo-card">
+    <div class="photo-card" data-img="sentdenis.png" data-title="СЕН-ДЕНІ" data-sub="газові ліхтарі & трамваї" data-location="Лемойн, французький квартал" data-desc="Жваве портове місто в стилі Нового Орлеана. Понад 500 унікальних NPC, кожен зі своєю активністю. Нічне підсвітлення — шедевр художнього відділу." data-quote="«Ми створили місто, яке живе 24/7 без участі гравця»">
         <div class="image-wrapper">
             <img src="sentdenis.png" alt="Сен-Дені">
             <div class="photo-overlay">
@@ -406,7 +561,7 @@
 
 <div class="dev-quote-block">
     <p><strong>Художній відділ Rockstar</strong> витратив понад 2 роки на створення біомів RDR2: від засніжених гір до болотистих нетрів.</p>
-    <p style="margin-top: 12px; font-size: 0.9rem;">«Кожен світанок у грі унікальний — позиція сонця, хмари та кольорова гама генеруються динамічно. Ми хочемо, щоб гравці зупинялися і просто дивилися на горизонт» — Аарон Гарбут, провідний художник.</p>
+    <p style="margin-top: 12px;">«Кожен світанок у грі унікальний — позиція сонця, хмари та кольорова гама генеруються динамічно. Ми хочемо, щоб гравці зупинялися і просто дивилися на горизонт» — Аарон Гарбут, провідний художник.</p>
 </div>
 
 <!-- НАВІГАЦІЙНІ КНОПКИ ВНИЗУ -->
@@ -419,6 +574,62 @@
     <p>★ Red Dead Redemption 2 — шедевр візуального оповідання ★</p>
     <p style="margin-top: 6px;">Ваші особисті скріншоти | Фотостудія</p>
 </div>
+
+<!-- МОДАЛЬНЕ ВІКНО -->
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <img id="modalImg" src="" alt="Збільшене фото">
+        <div class="modal-info">
+            <h3 id="modalTitle"></h3>
+            <div class="modal-sub" id="modalSub"></div>
+            <div class="modal-location" id="modalLocation"></div>
+            <div class="modal-desc" id="modalDesc"></div>
+            <div class="modal-quote" id="modalQuote"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const photoCards = document.querySelectorAll('.photo-card');
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSub = document.getElementById('modalSub');
+    const modalLocation = document.getElementById('modalLocation');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalQuote = document.getElementById('modalQuote');
+    const closeModal = document.querySelector('.close-modal');
+
+    function openModal(card) {
+        modalImg.src = card.getAttribute('data-img');
+        modalTitle.textContent = card.getAttribute('data-title');
+        modalSub.textContent = card.getAttribute('data-sub');
+        modalLocation.textContent = card.getAttribute('data-location');
+        modalDesc.textContent = card.getAttribute('data-desc');
+        modalQuote.textContent = card.getAttribute('data-quote');
+
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeModalFunc() {
+        modal.classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+
+    photoCards.forEach(card => {
+        card.addEventListener('click', () => openModal(card));
+    });
+
+    closeModal.addEventListener('click', closeModalFunc);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModalFunc();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModalFunc();
+    });
+</script>
 
 </body>
 </html>
