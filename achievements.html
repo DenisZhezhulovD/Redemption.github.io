@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Red Dead Redemption 2 | Путь разработки & Достижения</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            background: #0a0a0a;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            color: #ece7e1;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+        }
+
+        /* НОВЫЙ ФОН - СИЛУЭТ КОВБОЯ / ВЕСТЕРН */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: url('https://images.pexels.com/photos/1413412/rancher-sunset-silhouette-horse-1413412.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-position: center 40%;
+            background-repeat: no-repeat;
+            filter: brightness(0.28) contrast(1.15) sepia(0.25) saturate(0.9);
+        }
+
+        /* ЛЁГКАЯ ТЕКСТУРА ДЛЯ АТМОСФЕРЫ (можно убрать, если не нравится) */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
+            background-repeat: repeat;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b2c1d;
+            border-radius: 6px;
+        }
+
+        .rdr-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .achievement-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid #942c1c;
+            padding-bottom: 2rem;
+        }
+        .achievement-hero h1 {
+            font-family: 'Cormorant SC', serif;
+            font-size: 4rem;
+            letter-spacing: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #f2c94c, #c0392b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .hero-sub {
+            font-size: 1.1rem;
+            color: #b89a7a;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        .brand-sep {
+            width: 120px;
+            height: 3px;
+            background: #8b2c1d;
+            margin: 1rem auto 0;
+            box-shadow: 0 0 8px #c0392b;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin: 3rem 0 4rem;
+        }
+        .stat-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            border-left: 5px solid #bc3f2e;
+            flex: 1;
+            min-width: 170px;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .stat-card:hover {
+            transform: translateY(-6px);
+            border-left-color: #e6552e;
+            background: rgba(20, 5, 5, 0.85);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: 'Cormorant SC', monospace;
+            color: #e64b2c;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #d4bc9a;
+            margin-top: 8px;
+        }
+
+        .revolver-divider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .divider-line {
+            height: 2px;
+            background: #5a2a1f;
+            width: 100px;
+        }
+        .divider-icon {
+            color: #b34e3a;
+            font-size: 1.8rem;
+        }
+
+        .dev-facts {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        .fact-block {
+            background: rgba(12, 6, 6, 0.75);
+            border-radius: 24px;
+            padding: 1.8rem 2rem;
+            border: 1px solid rgba(180, 60, 40, 0.4);
+            backdrop-filter: blur(4px);
+        }
+        .fact-block h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            font-family: 'Cormorant SC', serif;
+            border-left: 6px solid #bc3f2e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #f0cf9a;
+        }
+        .fact-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .fact-text {
+            flex: 2;
+            font-size: 1rem;
+            color: #ddd2c2;
+            line-height: 1.6;
+        }
+        .fact-text p {
+            margin-bottom: 1rem;
+        }
+        .fact-highlight {
+            flex: 1;
+            background: #00000080;
+            border-radius: 20px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid #712e1f;
+            backdrop-filter: blur(2px);
+        }
+        .highlight-number {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #dc5a3a;
+        }
+        .highlight-caption {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .timeline-item {
+            background: #030000cc;
+            padding: 1.2rem;
+            border-radius: 16px;
+            text-align: center;
+            border-bottom: 3px solid #a03f2c;
+            backdrop-filter: blur(3px);
+        }
+        .timeline-year {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #da5b3a;
+        }
+        .timeline-desc {
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .dev-crew {
+            background: rgba(10, 4, 4, 0.85);
+            border-radius: 28px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 1px solid #862c1e;
+            backdrop-filter: blur(5px);
+        }
+        .crew-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+        }
+        .crew-stat {
+            text-align: center;
+        }
+        .crew-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: #3a1710;
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            display: inline-block;
+            color: #f6ad7a;
+        }
+        .crew-label {
+            font-size: 0.85rem;
+            margin-top: 0.6rem;
+            color: #b79573;
+        }
+        .quote {
+            font-style: italic;
+            text-align: center;
+            border-top: 1px dashed #8f412e;
+            padding-top: 1.5rem;
+            color: #ccb393;
+        }
+
+        .awards-section {
+            margin: 3rem 0 2rem;
+        }
+        .awards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .award-badge {
+            background: #1e0c08cc;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #943f2c;
+            color: #fadfbf;
+            backdrop-filter: blur(2px);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #3f241c;
+            font-size: 0.8rem;
+            color: #967a60;
+        }
+
+        @media (max-width: 780px) {
+            .rdr-container {
+                padding: 1rem;
+            }
+            .achievement-hero h1 {
+                font-size: 2.6rem;
+            }
+            .stat-card {
+                min-width: 140px;
+            }
+            .fact-block {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="rdr-container">
+    <div class="achievement-hero">
+        <h1>ЗА КУЛИСАМИ <span style="color:#c4452e;">REDEMPTION</span></h1>
+        <div class="hero-sub">Путь длиною в восемь лет — масштаб, страсть и одержимость деталями</div>
+        <div class="brand-sep"></div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number">~8 лет</div><div class="stat-label">Полный цикл разработки</div></div>
+        <div class="stat-card"><div class="stat-number">2 000+</div><div class="stat-label">разработчиков</div></div>
+        <div class="stat-card"><div class="stat-number">1 200</div><div class="stat-label">актеров озвучки</div></div>
+        <div class="stat-card"><div class="stat-number">500 000+</div><div class="stat-label">диалоговых строк</div></div>
+        <div class="stat-card"><div class="stat-number">~2 200</div><div class="stat-label">дней анимации</div></div>
+    </div>
+
+    <div class="revolver-divider"><div class="divider-line"></div><div class="divider-icon">⤛ 🔫 ⤜</div><div class="divider-line"></div></div>
+
+    <div class="dev-facts">
+        <div class="fact-block">
+            <h2>🎬 АНИМАЦИЯ & ДВИЖЕНИЕ — ТИТАНИЧЕСКИЙ ТРУД</h2>
+            <div class="fact-detail">
+                <div class="fact-text">
+                    <p>Более <strong>2 200 дней</strong> непрерывной работы аниматоров. Команда motion capture фиксировала движения актеров на специальной сцене площадью более 1000 кв. метров. Каждый переход Артура, каждое движение поводьев лошади — оцифровано и отточено вручную. Rockstar создала более <strong>300 000 уникальных анимаций</strong> — только для персонажей и животных, включая 300+ видов зверей с реалистичным поведением.</p>
+                    <p>Система «инерции тела» и «естественных реакций» — более 50 тысяч часов в монтаже и чистке треков движения. Анимация лошадей потребовала отдельной команды из 30 специалистов, которые работали с реальными лошадьми в течение 2 лет.</p>
+                </div>
+                <div class="fact-highlight"><div class="highlight-number">2200+ дней</div><div class="highlight-caption">чистого времени анимации</div><div style="margin-top: 12px; font-size: 1.8rem;">🐎</div></div>
+            </div>
+        </div>
+
+        <div class="fact-block">
+            <h2>🎙️ ЗАПИСЬ ДИАЛОГОВ & ОЗВУЧИВАНИЕ</h2>
+            <div class="fact-detail">
+                <div class="fact-text">
+                    <p>Команда звукорежиссеров и актеров провела более <strong>5 лет</strong> в студиях звукозаписи. Всего записано свыше <strong>500 000 реплик</strong> (с учетом вариантов выбора и случайных событий). Главные герои — Роджер Кларк (Артур Морган) и Бенджамин Байрон Дэвис (Датч) — провели в студии более 2100 часов каждый.<br> Диалоги реагируют на окружение, усталость, погоду и ситуацию — система "диалогового дерева" RAGE Engine включает 500+ часов уникальных разговоров.</p>
+                    <p>Rockstar привлекла 1200 актеров, включая профессиональных каскадеров для фоновых персонажей. Локализация на 11 языков — общий объём озвучки превышает 1,2 миллиона отдельных семплов.</p>
+                </div>
+                <div class="fact-highlight"><div class="highlight-number">~500K строк</div><div class="highlight-caption">диалогов с вариантами</div><div style="margin-top: 12px;">🎧</div></div>
+            </div>
+        </div>
+
+        <div class="fact-block">
+            <h2>🖥️ РАЗРАБОТЧИКИ И МАСШТАБ</h2>
+            <div class="fact-detail">
+                <div class="fact-text">
+                    <p>Основной костяк — более <strong>2000 разработчиков</strong> по всему миру: студии Rockstar в Сан-Диего, Нью-Йорке, Эдинбурге и Индии. Пиковая численность команды превышала 1600 человек одновременно. Итоговый код игры содержит около <strong>65 миллионов строк кода</strong>.</p>
+                    <p>Более 200 кинематографистов создали свыше 8 часов CGI-роликов. Для нужд игры написано 192 музыкальных композиции, а оригинальный саундтрек записывался с участием 110 музыкантов и хора.</p>
+                </div>
+                <div class="fact-highlight"><div class="highlight-number">2000+ девелоперов</div><div class="highlight-caption">из 8 студий Rockstar</div></div>
+            </div>
+        </div>
+
+        <div class="fact-block">
+            <h2>📜 МИР, ИСТОРИЯ И СЦЕНАРИЙ</h2>
+            <div class="fact-detail">
+                <div class="fact-text">
+                    <p>Сценарий RDR2 весит более <strong>2000 страниц</strong> — это сравнимо с томами "Войны и мира". Сюжетные линии переписаны 3 раза за время разработки. Команда сценаристов во главе с Дэном Хаузером и Майклом Ансвортом потратила 4 года на изучение исторических документов эпохи Дикого Запада.</p>
+                    <p>В игре 109 миссий, 60 дополнительных заданий и более 50 случайных встреч, каждая со своей драматургией. Игровой мир площадью ~75 км², который наполнен сотнями уникальных локаций, от заснеженных гор до болот Лаграса.</p>
+                </div>
+                <div class="fact-highlight"><div class="highlight-number">2 000 стр.</div><div class="highlight-caption">сценарий + лор мира</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="revolver-divider"><div class="divider-line"></div><div class="divider-icon">⧫ ✦ ⧫</div><div class="divider-line"></div></div>
+    <h2 style="font-family: 'Cormorant SC'; font-size: 2rem; text-align:center; margin: 0 0 1rem;">⏳ ЭТАПЫ СОЗДАНИЯ</h2>
+    <div class="timeline-grid">
+        <div class="timeline-item"><div class="timeline-year">2011–2013</div><div class="timeline-desc">Пре-продакшн, концепт-арты, прототипы движка</div></div>
+        <div class="timeline-item"><div class="timeline-year">2014–2016</div><div class="timeline-desc">Motion-capture, создание мира, 1200 актёров</div></div>
+        <div class="timeline-item"><div class="timeline-year">2017</div><div class="timeline-desc">Полировка анимаций, физика лошадей</div></div>
+        <div class="timeline-item"><div class="timeline-year">2018</div><div class="timeline-desc">Релиз на консолях ➤ PC (2019)</div></div>
+    </div>
+
+    <div class="dev-crew">
+        <h2 style="font-size: 1.6rem; border-left: 5px solid #bc3f2e; padding-left: 1rem;">🏆 НЕВЕРОЯТНЫЕ ПОДРОБНОСТИ РАЗРАБОТКИ</h2>
+        <div class="crew-stats">
+            <div class="crew-stat"><span class="crew-number">70+ млн $</span><div class="crew-label">Бюджет только на анимацию</div></div>
+            <div class="crew-stat"><span class="crew-number">2200 суток</span><div class="crew-label">Работа аниматоров</div></div>
+            <div class="crew-stat"><span class="crew-number">2.3 млн</span><div class="crew-label">кадров захвата движения</div></div>
+            <div class="crew-stat"><span class="crew-number">+300 видов</span><div class="crew-label">уникальных животных</div></div>
+        </div>
+        <div class="quote">
+            «Мы не просто создавали игру, мы строили живой мир, где каждый NPC проживает свою жизнь. Это потребовало 8 лет абсолютной преданности» — Сэм Хаузер, сооснователь Rockstar Games.
+        </div>
+        <div style="background:#191007cc; border-radius: 1rem; padding: 1rem; margin-top: 1.5rem;">
+            <p>🎙️ Роджер Кларк (Артур Морган) записывал реплики 5 лет, некоторые диалоги перезаписывали до 30 раз. Для лошадей записано 20 000 различных звуков.</p>
+            <p style="margin-top: 10px;">⏱️ Средняя рабочая неделя аниматоров в пик разработки: 60–80 часов.</p>
+        </div>
+    </div>
+
+    <div class="awards-section">
+        <h2 style="font-family: 'Cormorant SC'; font-size: 1.8rem; text-align: center; margin-bottom: 1rem;">🌟 ПРИЗНАНИЕ & АЧИВМЕНТЫ</h2>
+        <div class="awards-grid">
+            <span class="award-badge">🏆 The Game Awards 2018 — Лучшая история</span>
+            <span class="award-badge">🎬 BAFTA Games Awards — Лучший сценарий</span>
+            <span class="award-badge">🎮 Golden Joystick — Игра года</span>
+            <span class="award-badge">📀 4 рекорда Гиннесса</span>
+            <span class="award-badge">⭐ Metacritic 97 баллов</span>
+            <span class="award-badge">💿 Более 67 млн копий продано</span>
+        </div>
+    </div>
+
+    <div class="fact-block" style="background: #0c0502cc;">
+        <h2>📀 ОБЩИЙ ТРУД В ЦИФРАХ</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;">
+            <div><span style="color: #d94a2b; font-weight:800;">≈ 300 000</span><br>анимационных файлов</div>
+            <div><span style="color: #d94a2b; font-weight:800;">≈ 5 лет</span><br>записи диалогов</div>
+            <div><span style="color: #d94a2b; font-weight:800;">≈ 1 200</span><br>человек в съемочной группе</div>
+            <div><span style="color: #d94a2b; font-weight:800;">65 млн</span><br>строк кода игры</div>
+        </div>
+        <hr style="border-color: #5e2f22; margin: 1rem 0;">
+        <p style="color: #d3bc9b;">Rockstar Games потратила около 540 миллионов долларов на производство RDR2. Это одна из самых дорогих игр в истории.</p>
+    </div>
+
+    <div class="footer-note">
+        <p>★ Red Dead Redemption 2 — ода уходящему Дикому Западу, созданная титаническим трудом тысяч разработчиков, аниматоров, актеров и музыкантов. ★</p>
+    </div>
+</div>
+</body>
+</html>

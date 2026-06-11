@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Red Dead Redemption 2 | Фотостудия — Мир Дикого Запада</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0505;
+            background-image: radial-gradient(circle at 20% 30%, #1a0808, #020101);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            color: #e8dfd3;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b2c1d;
+            border-radius: 6px;
+        }
+
+        .photo-header {
+            text-align: center;
+            padding: 3rem 2rem 1.5rem;
+            border-bottom: 2px solid #942c1c;
+            margin-bottom: 2rem;
+        }
+        .photo-header h1 {
+            font-family: 'Cormorant SC', serif;
+            font-size: 4rem;
+            letter-spacing: 6px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #e6c27a, #bc3f2e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .photo-header p {
+            color: #b69063;
+            font-style: italic;
+            margin-top: 8px;
+        }
+        .brand-divider {
+            width: 100px;
+            height: 3px;
+            background: #a5412c;
+            margin: 1rem auto 0;
+        }
+
+        .gallery {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .photo-card {
+            background: rgba(10, 5, 5, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(150, 60, 40, 0.5);
+            transition: all 0.35s ease;
+            cursor: pointer;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+        }
+        .photo-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            border-color: #c24b32;
+            box-shadow: 0 25px 35px rgba(0,0,0,0.6);
+        }
+
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 230px;
+        }
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .photo-card:hover .image-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, #000000cc, transparent);
+            padding: 1.5rem 1rem 0.8rem;
+        }
+        .photo-overlay h3 {
+            font-family: 'Cormorant SC', serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            color: #f3cf94;
+            text-shadow: 0 1px 3px black;
+        }
+        .photo-overlay p {
+            font-size: 0.75rem;
+            color: #ddb582;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .photo-info {
+            padding: 1rem 1.2rem 1.2rem;
+        }
+        .photo-location {
+            display: inline-block;
+            background: #2c130e;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #e0a26b;
+            border-left: 2px solid #bc3f2e;
+            margin-bottom: 8px;
+        }
+        .photo-desc {
+            font-size: 0.85rem;
+            color: #cfbfa8;
+            line-height: 1.4;
+        }
+        .quote-mini {
+            margin-top: 8px;
+            font-size: 0.7rem;
+            font-style: italic;
+            color: #b68b60;
+            border-top: 1px dashed #692e1f;
+            padding-top: 6px;
+        }
+
+        .dev-quote-block {
+            max-width: 1000px;
+            margin: 2rem auto 3rem;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 1.8rem;
+            border-radius: 40px;
+            border-left: 6px solid #bc3f2e;
+            text-align: center;
+        }
+
+        .footer-photo {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #3f1d14;
+            color: #7f6248;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 700px) {
+            .gallery {
+                padding: 0.5rem 1rem 2rem;
+            }
+            .photo-header h1 {
+                font-size: 2.6rem;
+            }
+            .image-wrapper {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="photo-header">
+    <h1>📸 ФОТОСТУДИЯ</h1>
+    <p>Легендарные пейзажи Red Dead Redemption 2</p>
+    <div class="brand-divider"></div>
+</div>
+
+<div class="gallery">
+    
+    <!-- 1. Austin (Новый Остин) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="Austin.png" alt="New Austin">
+            <div class="photo-overlay">
+                <h3>🌵 НОВЫЙ ОСТИН</h3>
+                <p>пустыня & каньоны</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Рио-Браво, закат</span>
+            <div class="photo-desc">Бескрайние красные скалы, кактусы и золотистый свет. Система динамического освещения создаёт более 300 уникальных оттенков заката.</div>
+            <div class="quote-mini">«Хотели передать атмосферу классических вестернов Джона Форда»</div>
+        </div>
+    </div>
+
+    <!-- 2. Donner Falls -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="donner.png" alt="Donner Falls">
+            <div class="photo-overlay">
+                <h3>🏞️ DONNER FALLS</h3>
+                <p>водопад & сосновые леса</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Амбарино, у подножия гор</span>
+            <div class="photo-desc">Один из самых живописных водопадов. Звуки воды и эхо среди скал создают полное погружение. Команда Rockstar записывала реальные шумы водопада Йосемити.</div>
+            <div class="quote-mini">«Каждый водопад в игре имеет уникальную акустику» — звукорежиссёр</div>
+        </div>
+    </div>
+
+    <!-- 3. Hannigan (Хенниган Стид) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="Hannigan.png" alt="Hennigan Stead">
+            <div class="photo-overlay">
+                <h3>🏜️ ХЕННИГАН СТИД</h3>
+                <p>красные скалы & пыльные бури</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Нью-Остин, пустыня</span>
+            <div class="photo-desc">Красные песчаники и пыльные бури. Отражение от скал обрабатывается в реальном времени благодаря Rockstar Advanced Game Engine.</div>
+            <div class="quote-mini">«В пустыне мы уменьшили время отклика растительности — ощущение зноя»</div>
+        </div>
+    </div>
+
+    <!-- 4. Lagras (Болота) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="lagras.png" alt="Lagras Swamp">
+            <div class="photo-overlay">
+                <h3>🌾 ЛАГРАС / БОЛОТА</h3>
+                <p>мистика & туман</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Лемойн, ночные огни</span>
+            <div class="photo-desc">Густые туманы, светлячки и скрытые опасности. Аниматоры создали 12 видов болотных существ, включая редких аллигаторов-альбиносов.</div>
+            <div class="quote-mini">«Болота требуют 200+ уникальных звуков насекомых и птиц»</div>
+        </div>
+    </div>
+
+    <!-- 5. Lakota (Река Дакота) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="lakota.png" alt="Dakota River">
+            <div class="photo-overlay">
+                <h3>🏞️ РЕКА ДАКОТА</h3>
+                <p>каньоны & броды</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 У подножия гор, западнее Валентайна</span>
+            <div class="photo-desc">Идеальное место для рыбалки и наблюдения за орлами. Гидродинамика воды — свыше 1000 физических частиц на каждый ручей.</div>
+            <div class="quote-mini">«Течение меняется в зависимости от сезона и дождя»</div>
+        </div>
+    </div>
+
+    <!-- 6. Mounts (Горы Амбарино) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="mounts.png" alt="Ambarino Mountains">
+            <div class="photo-overlay">
+                <h3>❄️ ГРАНИЧНЫЕ ГОРЫ</h3>
+                <p>метели & волки</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Амбарино, перевал Гризли</span>
+            <div class="photo-desc">Заснеженные вершины и замерзшие водопады. Разработчики оцифровали более 50 видов следов на снегу, которые реагируют на погоду.</div>
+            <div class="quote-mini">«Снег в RDR2 — это отдельный движок с 15 слоями физики»</div>
+        </div>
+    </div>
+
+    <!-- 7. Plains (Великие равнины) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="plains.png" alt="Great Plains">
+            <div class="photo-overlay">
+                <h3>🌾 ВЕЛИКИЕ РАВНИНЫ</h3>
+                <p>бизоны & койоты</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Запад Элизабет, стада бизонов</span>
+            <div class="photo-desc">Открытые прерии с эффектом бескрайнего горизонта. Трава колышется реалистично от ветра — 25 000 процедурных стеблей.</div>
+            <div class="quote-mini">«Стадо бизонов может насчитывать до 40 особей с индивидуальным ИИ»</div>
+        </div>
+    </div>
+
+    <!-- 8. Rhoades (Роудс) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="Rhoades.png" alt="Rhodes">
+            <div class="photo-overlay">
+                <h3>🌅 РОУДС</h3>
+                <p>южный шарм & пыльные улицы</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Лемойн, между Сен-Дени и болотами</span>
+            <div class="photo-desc">Небольшой городок с плантациями и напряжённой атмосферой. Вдохновлён реальными городами американского Юга.</div>
+            <div class="quote-mini">«Конфликт семей Брейтуэйтов и Греев — отсылка к реальным кланам»</div>
+        </div>
+    </div>
+
+    <!-- 9. Sent Denis (Сен-Дени) -->
+    <div class="photo-card">
+        <div class="image-wrapper">
+            <img src="sentdenis.png" alt="Saint Denis">
+            <div class="photo-overlay">
+                <h3>🏙️ СЕН-ДЕНИ</h3>
+                <p>газовые фонари & трамваи</p>
+            </div>
+        </div>
+        <div class="photo-info">
+            <span class="photo-location">📍 Лемойн, французский квартал</span>
+            <div class="photo-desc">Оживлённый портовый город в стиле Нового Орлеана. Более 500 уникальных NPC, каждый со своей активностью. Ночная подсветка — шедевр художественного отдела.</div>
+            <div class="quote-mini">«Мы создали город, который живёт 24/7 без участия игрока»</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="dev-quote-block">
+    <p>🎨 <strong>Художественный отдел Rockstar</strong> потратил более 2 лет на создание биомов RDR2: от заснеженных гор до болотистых топей.</p>
+    <p style="margin-top: 12px; font-size: 0.9rem;">«Каждый рассвет в игре уникален — позиция солнца, облака и цветовая гамма генерируются динамически. Мы хотим, чтобы игроки останавливались и просто смотрели на горизонт» — Аарон Гарбут, ведущий художник.</p>
+</div>
+
+<div class="footer-photo">
+    <p>★ Red Dead Redemption 2 — шедевр визуального повествования ★</p>
+    <p style="margin-top: 6px;">Ваши личные скриншоты | Фотостудия</p>
+</div>
+
+</body>
+</html>

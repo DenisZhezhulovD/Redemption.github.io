@@ -1,0 +1,37 @@
+html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    background-color: #dcd7ca;
+    overflow: hidden;
+}
+
+.main-menu {
+    width: 100%; height: 100vh;
+    background-image: url('final-menu.png'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.btn {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    border: none;
+    /* Убираем всё лишнее, оставляем только прозрачность */
+    background: transparent;
+    transition: 0.5s ease;
+    z-index: 10;
+}
+
+/* ЭФФЕКТ: при наведении картинка под кнопкой становится чуть ярче и контрастнее */
+.btn:hover {
+    /* Легкое осветление зоны, как будто присмотрелся */
+    filter: brightness(1.2) contrast(1.1);
+    /* Добавляем едва заметную тень, создающую эффект объема бумаги */
+    box-shadow: 0 0 40px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Зоны (координаты остались прежними) */
+.btn-achievements { top: 34%; left: 7%; width: 27%; height: 47%; }
+.btn-photostudio { top: 34%; left: 37%; width: 27%; height: 47%; }
+.btn-story { top: 34%; left: 67%; width: 27%; height: 47%; }
